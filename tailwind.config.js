@@ -6,7 +6,11 @@ module.exports = {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'hero-gradient': 'linear-gradient(to right, #EE2E45 75%, transparent 25%)',
+      },
+    },
   },
   plugins: [],
 }
