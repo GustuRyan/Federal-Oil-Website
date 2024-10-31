@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite('resources/css/app.css')
-    <title>Worshop Website</title>
+    <title>Workshop Website</title>
 </head>
 <body>
     <div class="w-full">
@@ -15,7 +15,7 @@
                 
                 {{-- Queue Card --}}
                 
-                <div class="w-fit h-fit bg-light-red mr-24 rounded-lg shadow-lg p-8 grid grid-cols-2 gap-x-8 gap-y-16">
+                <div class="w-fit h-fit bg-light-red mr-24 rounded-lg shadow-lg p-8 grid grid-cols-2 gap-x-12 gap-y-16">
                     <div class="font-bold text-bold-blue">
                         <h1 class="text-2xl">
                             Antrean Sekarang
@@ -66,22 +66,72 @@
 
             </div>
         </div>
-        <div class="w-full bg-light-red p-12 space-y-8 text-xl font-semibold">
-            <div class="flex justify-between">
-                <div class="space-x-2">
+
+        {{-- Customer's Data --}}
+
+        <form class="w-full bg-light-red p-12 space-y-8 text-xl font-semibold">
+            <div class="grid grid-cols-3  gap-x-12">
+                <div class="space-x-2 flex items-center justify-between">
                     <label for="">Nomor Invoice</label>
                     <input type="text" class="p-3 rounded-md border-2">
                 </div>
-                <div class="space-x-2">
+                <div class="space-x-2 flex items-center justify-between">
                     <label for="">Nomor Polisi</label>
                     <input type="text" class="p-3 rounded-md border-2">
                 </div>
-                <div class="space-x-2">
+                <div class="space-x-2 flex items-center justify-between">
                     <label for="">Tanggal</label>
                     <input type="text" class="p-3 rounded-md border-2">
                 </div>
             </div>
+            <div class="grid grid-cols-3  gap-x-12">
+                <div class="space-x-2 flex items-center justify-between">
+                    <label for="">Pemilik</label>
+                    <input type="text" class="p-3 rounded-md border-2">
+                </div>
+                <div class="space-x-2 flex items-center justify-between">
+                    <label for="">Merk/Tipe</label>
+                    <input type="text" class="p-3 rounded-md border-2">
+                </div>
+                <div class="space-x-2 flex items-center justify-between">
+                    <label for="">Nomor Rangka</label>
+                    <input type="text" class="p-3 rounded-md border-2">
+                </div>
+            </div>
+            <div class="grid grid-cols-3  gap-x-12">
+                <div class="space-x-2 flex items-center justify-between">
+                    <label for="">Jenis</label>
+                    <input type="text" class="p-3 w- rounded-md border-2">
+                </div>
+                <div class="space-x-2 flex items-center justify-between">
+                    <label for="">Warna</label>
+                    <input type="text" class="p-3 rounded-md border-2">
+                </div>
+                <div class="space-x-2 flex items-center justify-between">
+                    <label for="">Nomor Mesin</label>
+                    <input type="text" class="p-3 rounded-md border-2">
+                </div>
+            </div>
+        </form>
+
+        {{-- End of Customer's Data --}}
+
+        {{-- Vehicle's Data --}}
+
+        <div class="p-12 flex justify-between gap-12">
+            
+            <div class="space-y-12 w-full">
+                <livewire:chasier-table/>
+                
+                <livewire:chasier-table/>
+            </div>
+
+            @include('frontviews.components.transaction-detail')
+
         </div>
+
+        {{-- End of Vehicle's Data --}}
+        
     </div>
 </body>
 </html>
