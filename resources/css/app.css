@@ -11,3 +11,15 @@ th {
     border-width: 3px;
     padding: 8px;
 }
+
+/* CSS untuk menghilangkan scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
