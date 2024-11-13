@@ -35,11 +35,11 @@
                     <td>2 Unit</td>
                     <td>500.000</td>
                     <td align="center">
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 justify-center">
                             <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Detail
                             </button>
-                            <button class="w-20 flex justify-between bg-yellow-500 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Edit
                             </button>
                             <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
@@ -55,11 +55,11 @@
                     <td>2 Unit</td>
                     <td>500.000</td>
                     <td align="center">
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 justify-center">
                             <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Detail
                             </button>
-                            <button class="w-20 flex justify-between bg-yellow-500 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Edit
                             </button>
                             <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
@@ -75,11 +75,11 @@
                     <td>2 Unit</td>
                     <td>500.000</td>
                     <td align="center">
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 justify-center">
                             <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Detail
                             </button>
-                            <button class="w-20 flex justify-between bg-yellow-500 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Edit
                             </button>
                             <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
@@ -95,11 +95,11 @@
                     <td>2 Unit</td>
                     <td>500.000</td>
                     <td align="center">
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 justify-center">
                             <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Detail
                             </button>
-                            <button class="w-20 flex justify-between bg-yellow-500 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Edit
                             </button>
                             <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
@@ -115,11 +115,11 @@
                     <td>2 Unit</td>
                     <td>500.000</td>
                     <td align="center">
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 justify-center">
                             <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Detail
                             </button>
-                            <button class="w-20 flex justify-between bg-yellow-500 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
                                 Edit
                             </button>
                             <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
