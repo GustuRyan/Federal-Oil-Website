@@ -8,7 +8,13 @@
     <title>Workshop Website</title>
 </head>
 <body>
-    <div class="w-full">
+    <div class="relative w-full">
+        <div class="fixed bottom-0 right-0 font-bold z-30 p-4">
+            <a href="{{ route('admin.dashboard') }}" class="py-2 px-4 bg-bold-blue rounded-full text-lg text-white text-center opacity-50 hover:opacity-100">
+                Panel 
+                Admin
+            </a>
+        </div>
         <div class="relative">
             <img src="/workshop-hero.png" alt="Hero Image" class="w-full h-screen object-cover">
             <div class="absolute left-0 top-0 w-full h-screen bg-gradient-to-r from-[rgba(238,46,69,0.75)] to-[rgba(238,46,69,0.25)] flex items-center justify-end">
