@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class ChasierTable extends Component
+class CashierTable extends Component
 {
     public function render()
     {
-        return view('livewire.chasier-table');
+        return view('livewire.cashier-table');
     }
 }
