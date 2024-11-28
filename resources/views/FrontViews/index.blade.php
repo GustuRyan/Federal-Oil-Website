@@ -127,9 +127,9 @@
         <div class="p-12 flex justify-between gap-12">
             
             <div class="space-y-12 w-full">
-                <livewire:chasier-table/>
+                <livewire:cashier-table/>
                 
-                <livewire:chasier-table/>
+                <livewire:cashier-table/>
             </div>
 
             @include('frontviews.components.transaction-detail')
