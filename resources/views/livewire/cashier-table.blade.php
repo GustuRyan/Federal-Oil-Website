@@ -18,7 +18,7 @@
     <div>
         <table class="w-full border rounded-xl">
             <thead>
-                <tr align="center">
+                <tr align="center" class="text-[#515769]">
                     <th>No</th>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
@@ -36,15 +36,18 @@
                     <td>500.000</td>
                     <td align="center">
                         <div class="flex gap-2 justify-center">
-                            <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-blue rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_detail.svg" alt="" class="w-5 h-5">
                                 Detail
-                            </button>
-                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bg-[#F7C443] rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_edit.svg" alt="" class="w-5 h-5">
                                 Edit
-                            </button>
-                            <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-red rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_delete.svg" alt="" class="w-5 h-5">
                                 Delete
-                            </button>
+                            </a> 
                         </div>
                     </td>
                 </tr>
@@ -56,15 +59,18 @@
                     <td>500.000</td>
                     <td align="center">
                         <div class="flex gap-2 justify-center">
-                            <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-blue rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_detail.svg" alt="" class="w-5 h-5">
                                 Detail
-                            </button>
-                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bg-[#F7C443] rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_edit.svg" alt="" class="w-5 h-5">
                                 Edit
-                            </button>
-                            <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-red rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_delete.svg" alt="" class="w-5 h-5">
                                 Delete
-                            </button>
+                            </a> 
                         </div>
                     </td>
                 </tr>
@@ -76,15 +82,18 @@
                     <td>500.000</td>
                     <td align="center">
                         <div class="flex gap-2 justify-center">
-                            <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-blue rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_detail.svg" alt="" class="w-5 h-5">
                                 Detail
-                            </button>
-                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bg-[#F7C443] rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_edit.svg" alt="" class="w-5 h-5">
                                 Edit
-                            </button>
-                            <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-red rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_delete.svg" alt="" class="w-5 h-5">
                                 Delete
-                            </button>
+                            </a> 
                         </div>
                     </td>
                 </tr>
@@ -96,15 +105,18 @@
                     <td>500.000</td>
                     <td align="center">
                         <div class="flex gap-2 justify-center">
-                            <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-blue rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_detail.svg" alt="" class="w-5 h-5">
                                 Detail
-                            </button>
-                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bg-[#F7C443] rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_edit.svg" alt="" class="w-5 h-5">
                                 Edit
-                            </button>
-                            <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-red rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_delete.svg" alt="" class="w-5 h-5">
                                 Delete
-                            </button>
+                            </a> 
                         </div>
                     </td>
                 </tr>
@@ -116,15 +128,18 @@
                     <td>500.000</td>
                     <td align="center">
                         <div class="flex gap-2 justify-center">
-                            <button class="w-20 flex justify-between bg-bold-blue rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-blue rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_detail.svg" alt="" class="w-5 h-5">
                                 Detail
-                            </button>
-                            <button class="w-20 flex justify-between bg-yellow-400 rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bg-[#F7C443] rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_edit.svg" alt="" class="w-5 h-5">
                                 Edit
-                            </button>
-                            <button class="w-20 flex justify-between bg-bold-red rounded-lg text-white font-semibold p-2 hover:opacity-80">
+                            </a> 
+                            <a href="" class="w-fit h-12 py-1 px-2 bg-bold-red rounded-lg text-white flex justify-between items-center gap-2 hover:opacity-85">
+                                <img src="/icons/icon_delete.svg" alt="" class="w-5 h-5">
                                 Delete
-                            </button>
+                            </a> 
                         </div>
                     </td>
                 </tr>
