@@ -20,7 +20,7 @@
                         Kategori
                     </option>
                 </select>
-                <a href="" class="w-28 h-9 py-1 px-2 bg-bold-blue rounded-lg text-white flex justify-between items-center hover:opacity-85">
+                <a href="{{route('admin.stocks.create')}}" class="w-28 h-9 py-1 px-2 bg-bold-blue rounded-lg text-white flex justify-between items-center hover:opacity-85">
                     Tambah
                     <img src="/icons/icon_plus.svg" alt="" class="w-4 h-4">
                 </a>
