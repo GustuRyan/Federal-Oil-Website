@@ -34,11 +34,13 @@
                         <h1>
                             Daftar Antrean
                         </h1>
-                        <div class="text-5xl space-y-3">
-                            <p>08</p>
-                            <p>09</p>
-                            <p>10</p>
-                            <p>11</p>
+                        <div class="overflow-y-scroll scrollbar-hide h-56">
+                            <div class="text-5xl space-y-3">
+                                <p>08</p>
+                                <p>09</p>
+                                <p>10</p>
+                                <p>11</p>
+                            </div>
                         </div>
                     </div>
                     <div class="font-bold text-bold-blue w-fit space-y-12">
@@ -127,7 +129,7 @@
         <div class="p-12 flex justify-between gap-12">
             
             <div class="space-y-12 w-full">
-                <livewire:cashier-table/>
+                <livewire:cashier-table :type="'service'"/>
                 
                 <livewire:cashier-table/>
             </div>
