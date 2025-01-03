@@ -41,6 +41,12 @@
             'root' => 'admin.receivables.*'
         ],
         [
+            'title' => 'Pelanggan',
+            'icon' => '',
+            'route' => 'admin.customer.index',
+            'root' => 'admin.customer.*'
+        ],
+        [
             'title' => 'Kasir',
             'icon' => '',
             'route' => 'cashier',
