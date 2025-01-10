@@ -36,19 +36,3 @@ return new class extends Migration
         Schema::dropIfExists('product');
     }
 };
-
-# Data Stok Barang
-// 1. Kode Barang (unik)
-// 2. Nama Barang (suku cadang, aksesoris, dll.)
-// 3. Kategori (jenis suku cadang, aksesoris, dll.)
-// 4. Merek (merek suku cadang)
-// 5. Model (model suku cadang)
-// 6. Stok Awal (jumlah awal)
-// 7. Stok Sekarang (jumlah terkini)
-// 8. Harga Beli (harga pembelian)
-// 9. Harga Jual (harga penjualan)
-// 10. Satuan (unit, pcs, kg, dll.)
-// 11. Tanggal Masuk (tanggal barang masuk)
-// 12. Tanggal Kadaluarsa (jika ada)
-// 13. Keterangan (opsional)
-// Tambah lokasi barang (rak 1, rak2)
