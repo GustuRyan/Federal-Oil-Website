@@ -11,20 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->string('invoice');
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
             $table->float('total_cost');
-            $table->enum('payment_methods', allowed: ['tunai', 'kredit', 'transfer']);
-            $table->enum('payment_status', allowed:['lunas', 'belum lunas']);
+            $table->enum('payment_methods', ['tunai', 'kredit', 'transfer']); 
+            $table->enum('payment_status', ['lunas', 'belum lunas']);        
             $table->text('description')->nullable();
-        });
+        });        
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('transaction');
+        Schema::dropIfExists('transactions');
     }
 };
