@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return response()->json($products);
+        return view('backviews.pages.stock.index', compact('products'));
     }
 
     /**
@@ -23,7 +23,7 @@ class ProductController extends Controller
     {
         // Validasi data
         $validated = $request->validate([
-            'product_code' => 'required|integer|unique:product,product_code',
+            'product_code' => 'required|integer|unique:products,product_code',
             'product_name' => 'required|string|max:255',
             'product_category' => 'required|string',
             'brand' => 'nullable|string',
@@ -42,19 +42,22 @@ class ProductController extends Controller
         // Simpan data product
         $product = Product::create($validated);
 
-        return response()->json([
-            'message' => 'Product created successfully',
-            'data' => $product,
-        ], 201);
+        return redirect()->route('admin.stocks.index')->with('success', 'Produk berhasil ditambahkan.');
     }
 
     /**
      * Display the specified product.
      */
-    public function show($id)
+    public function detail($id)
     {
         $product = Product::findOrFail($id);
-        return response()->json($product);
+        return view('backviews.pages.stock.detail', compact('product'));
+    }
+
+    public function edit($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('backviews.pages.stock.update', compact('product'));
     }
 
     /**
@@ -64,7 +67,7 @@ class ProductController extends Controller
     {
         // Validasi data
         $validated = $request->validate([
-            'product_code' => 'sometimes|required|integer|unique:product,product_code,' . $id,
+            'product_code' => 'sometimes|required|integer|unique:products,product_code,' . $id,
             'product_name' => 'sometimes|required|string|max:255',
             'product_category' => 'sometimes|required|string',
             'brand' => 'nullable|string',
@@ -84,22 +87,17 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->update($validated);
 
-        return response()->json([
-            'message' => 'Product updated successfully',
-            'data' => $product,
-        ], 200);
+        return redirect()->route('admin.stocks.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
     /**
      * Remove the specified product from storage.
      */
-    public function destroy($id)
+    public function delete($id)
     {
         $product = Product::findOrFail($id);
         $product->delete();
 
-        return response()->json([
-            'message' => 'Product deleted successfully',
-        ], 200);
+        return redirect()->route('admin.stocks.index')->with('success', 'Produk berhasil dihapus.');
     }
 }
