@@ -13,7 +13,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = Customer::all();
-        return response()->json($customers);
+        return view('backviews.pages.customer.index', compact('customers'));
     }
 
     /**
@@ -25,8 +25,8 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
-            'phone_number' => 'required|string|unique:customer,phone_number',
-            'email' => 'required|email|unique:customer,email',
+            'phone_number' => 'required|string|unique:customers,phone_number',
+            'email' => 'required|email|unique:customers,email',
             'motorcycle_type' => 'required|string',
             'description' => 'nullable|string',
         ]);
@@ -34,19 +34,16 @@ class CustomerController extends Controller
         // Simpan data customer
         $customer = Customer::create($validated);
 
-        return response()->json([
-            'message' => 'Customer created successfully',
-            'data' => $customer,
-        ], 201);
+        return redirect()->route('admin.customer.index')->with('success', 'Pelanggan baru berhasil ditambahkan.');
     }
 
     /**
      * Display the specified customer.
      */
-    public function show($id)
+    public function edit($id)
     {
         $customer = Customer::findOrFail($id);
-        return response()->json($customer);
+        return view('backviews.pages.customer.update', compact('customer'));
     }
 
     /**
@@ -58,8 +55,8 @@ class CustomerController extends Controller
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'address' => 'sometimes|required|string',
-            'phone_number' => 'sometimes|required|string|unique:customer,phone_number,' . $id,
-            'email' => 'sometimes|required|email|unique:customer,email,' . $id,
+            'phone_number' => 'sometimes|required|string|unique:customers,phone_number,' . $id,
+            'email' => 'sometimes|required|email|unique:customers,email,' . $id,
             'motorcycle_type' => 'sometimes|required|string',
             'description' => 'nullable|string',
         ]);
@@ -68,10 +65,7 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
         $customer->update($validated);
 
-        return response()->json([
-            'message' => 'Customer updated successfully',
-            'data' => $customer,
-        ], 200);
+        return redirect()->route('admin.customer.index')->with('success', 'Pelanggan baru berhasil diperbarui.');
     }
 
     /**
@@ -82,8 +76,6 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
         $customer->delete();
 
-        return response()->json([
-            'message' => 'Customer deleted successfully',
-        ], 200);
+        return redirect()->route('admin.customer.index')->with('success', 'Pelanggan baru berhasil dihapus.');
     }
 }
