@@ -11,7 +11,7 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::all();
-        return response()->json($services);
+        return view('backviews.pages.service', compact('services'));
     }
 
     // Create a new service
@@ -30,7 +30,7 @@ class ServiceController extends Controller
     }
 
     // Show a specific service
-    public function show($id)
+    public function edit($id)
     {
         $service = Service::find($id);
 
@@ -38,7 +38,7 @@ class ServiceController extends Controller
             return response()->json(['error' => 'Service not found.'], 404);
         }
 
-        return response()->json($service);
+        return view('backviews.pages.service.update', compact('service'));
     }
 
     // Update an existing service
