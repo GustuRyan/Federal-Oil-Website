@@ -36,6 +36,24 @@ class CustomerController extends Controller
 
         return redirect()->route('admin.customer.index')->with('success', 'Pelanggan baru berhasil ditambahkan.');
     }
+    
+    public function storeDashboard(Request $request)
+    {
+        // Validasi data
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string',
+            'phone_number' => 'required|string|unique:customers,phone_number',
+            'email' => 'required|email|unique:customers,email',
+            'motorcycle_type' => 'required|string',
+            'description' => 'nullable|string',
+        ]);
+
+        // Simpan data customer
+        $customer = Customer::create($validated);
+
+        return redirect()->route('cashier')->with('success', 'Pelanggan baru berhasil ditambahkan.');
+    }
 
     /**
      * Display the specified customer.
