@@ -30,7 +30,7 @@ class CartController extends Controller
                 $cart->amount += 1;
                 $cart->save();
 
-                return response()->json(['message' => 'Cart updated successfully.', 'cart' => $cart]);
+                return redirect()->route('cashier')->with('success', 'Jumlah berhasil ditambahkan.');
             }
 
             // Create a new cart for the product
@@ -41,40 +41,38 @@ class CartController extends Controller
 
         $cart = Cart::create($validated);
 
-        return response()->json(['message' => 'Cart created successfully.', 'cart' => $cart]);
+        return redirect()->route('cashier')->with([
+            'success' => 'Keranjang berhasil ditambahkan.',
+            'scroll' => true, 
+        ]);
     }
 
     // Update a cart
     public function update(Request $request, $id)
     {
+        // Cari data cart berdasarkan ID
         $cart = Cart::find($id);
 
+        // Jika cart tidak ditemukan, kembalikan respons error
         if (!$cart) {
             return response()->json(['error' => 'Cart not found.'], 404);
         }
 
+        // Validasi hanya untuk amount dan service_time
         $validated = $request->validate([
-            'product_id' => 'nullable|exists:products,id',
-            'service_id' => 'nullable|exists:services,id',
-            'amount' => 'nullable|integer|min:1',
-            'service_time' => 'nullable|integer',
+            'amount' => 'nullable|integer|min:1', // amount boleh kosong, tapi jika diisi harus minimal 1
+            'service_time' => 'nullable|integer', // service_time boleh kosong dan harus integer jika diisi
         ]);
 
-        // Ensure only one of product_id or service_id is filled
-        if (!empty($validated['product_id']) && !empty($validated['service_id'])) {
-            return response()->json(['error' => 'Only one of product_id or service_id can be filled.'], 400);
-        }
-
-        if (!empty($validated['product_id'])) {
-            $validated['service_id'] = null; // Ensure service_id is null
-        } elseif (!empty($validated['service_id'])) {
-            $validated['product_id'] = null; // Ensure product_id is null
-        }
-
+        // Update hanya field yang divalidasi
         $cart->update($validated);
 
-        return response()->json(['message' => 'Cart updated successfully.', 'cart' => $cart]);
+        return redirect()->route('cashier')->with([
+            'success' => 'Keranjang berhasil diperbarui.',
+            'scroll' => true, 
+        ]);
     }
+
 
     // Delete a cart
     public function destroy($id)
@@ -87,6 +85,9 @@ class CartController extends Controller
 
         $cart->delete();
 
-        return response()->json(['message' => 'Cart deleted successfully.']);
+        return redirect()->route('cashier')->with([
+            'success' => 'Keranjang berhasil dihapus.',
+            'scroll' => true, 
+        ]);
     }
 }
