@@ -11,7 +11,7 @@ class ServiceController extends Controller
     public function index()
     {
         $services = Service::all();
-        return view('backviews.pages.service', compact('services'));
+        return view('backviews.pages.service.index', compact('services'));
     }
 
     // Create a new service
@@ -26,7 +26,7 @@ class ServiceController extends Controller
 
         $service = Service::create($validated);
 
-        return response()->json(['message' => 'Service created successfully.', 'service' => $service], 201);
+        return redirect()->route('admin.service.index')->with('success', 'Service berhasil ditambahkan.');
     }
 
     // Show a specific service
@@ -59,7 +59,7 @@ class ServiceController extends Controller
 
         $service->update($validated);
 
-        return response()->json(['message' => 'Service updated successfully.', 'service' => $service]);
+        return redirect()->route('admin.service.index')->with('success', 'Service berhasil diperbarui.');
     }
 
     // Delete a service
@@ -73,6 +73,6 @@ class ServiceController extends Controller
 
         $service->delete();
 
-        return response()->json(['message' => 'Service deleted successfully.']);
+        return redirect()->route('admin.service.index')->with('success', 'Service berhasil dihapus.');
     }
 }
