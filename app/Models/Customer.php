@@ -14,7 +14,7 @@ class Customer extends Model
      *
      * @var string
      */
-    protected $table = 'customer';
+    protected $table = 'customers';
 
     /**
      * Atribut-atribut yang dapat diisi secara massal (mass assignable).
