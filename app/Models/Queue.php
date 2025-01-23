@@ -14,7 +14,7 @@ class Queue extends Model
      *
      * @var string
      */
-    protected $table = 'queue';
+    protected $table = 'queues';
 
     /**
      * 
@@ -24,6 +24,7 @@ class Queue extends Model
     protected $fillable = [
         'current_queue',
         'queue_list',
+        'last_queue',
     ];
 
     /**
