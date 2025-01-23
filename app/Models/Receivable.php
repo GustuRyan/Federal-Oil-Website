@@ -14,7 +14,7 @@ class Receivable extends Model
      *
      * @var string
      */
-    protected $table = 'receivable';
+    protected $table = 'receivables';
 
     /**
      * 
