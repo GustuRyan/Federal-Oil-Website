@@ -14,7 +14,7 @@ class Product extends Model
      *
      * @var string
      */
-    protected $table = 'product';
+    protected $table = 'products';
 
     /**
      * Atribut-atribut yang dapat diisi secara massal (mass assignable).
