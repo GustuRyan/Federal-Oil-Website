@@ -12,8 +12,8 @@ class SpendingController extends Controller
      */
     public function index()
     {
-        $spendings = Spending::all();
-        return response()->json($spendings);
+        $spendings = Spending::paginate(10);
+        return view('backviews.pages.spending.index', compact('spendings'));
     }
 
     /**
@@ -33,19 +33,17 @@ class SpendingController extends Controller
         // Simpan data spending
         $spending = Spending::create($validated);
 
-        return response()->json([
-            'message' => 'Spending created successfully',
-            'data' => $spending,
-        ], 201);
+        return redirect()->route('admin.spending.index')->with('success', 'Pengeluaran berhasil ditambahkan.');
     }
 
     /**
      * Display the specified spending record.
      */
-    public function show($id)
+    public function edit($id)
     {
         $spending = Spending::findOrFail($id);
-        return response()->json($spending);
+
+        return view('backviews.pages.spending.update', compact('spending'));
     }
 
     /**
@@ -66,10 +64,7 @@ class SpendingController extends Controller
         $spending = Spending::findOrFail($id);
         $spending->update($validated);
 
-        return response()->json([
-            'message' => 'Spending updated successfully',
-            'data' => $spending,
-        ], 200);
+        return redirect()->route('admin.spending.index')->with('success', 'Pengeluaran berhasil diperbarui.');
     }
 
     /**
@@ -80,8 +75,6 @@ class SpendingController extends Controller
         $spending = Spending::findOrFail($id);
         $spending->delete();
 
-        return response()->json([
-            'message' => 'Spending deleted successfully',
-        ], 200);
+        return redirect()->route('admin.spending.index')->with('success', 'Pengeluaran berhasil dihapus.');
     }
 }
