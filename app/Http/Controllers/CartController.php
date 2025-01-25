@@ -30,7 +30,10 @@ class CartController extends Controller
                 $cart->amount += 1;
                 $cart->save();
 
-                return redirect()->route('cashier')->with('success', 'Jumlah berhasil ditambahkan.');
+                return redirect()->route('cashier')->with([
+                    'success' => 'Keranjang berhasil ditambahkan.',
+                    'scroll' => true, 
+                ]);
             }
 
             // Create a new cart for the product
