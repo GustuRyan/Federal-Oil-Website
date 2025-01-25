@@ -13,8 +13,8 @@ class ReceivableController extends Controller
      */
     public function index()
     {
-        $receivables = Receivable::with('customer')->get();
-        return response()->json($receivables);
+        $receivables = Receivable::paginate(10);
+        return view('backviews.pages.receivable.index', compact('receivables'));
     }
 
     /**
@@ -22,31 +22,37 @@ class ReceivableController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         // Validasi data
         $validated = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'total_cost' => 'required|numeric',
             'due_date' => 'required|date',
-            'payment_status' => 'required|in:lunas,belum_lunas',
+            'payment_status' => 'required|in:lunas,belum lunas',
             'description' => 'nullable|string',
         ]);
 
         // Simpan data receivable
         $receivable = Receivable::create($validated);
 
-        return response()->json([
-            'message' => 'Receivable created successfully',
-            'data' => $receivable,
-        ], 201);
+        return redirect()->route('admin.receivables.index')->with('success', 'Piutang berhasil ditambahkan.');
     }
 
+    public function create()
+    {
+        $customers = Customer::all();
+
+        return view('backviews.pages.receivable.create', compact('customers'));
+    }
     /**
      * Display the specified receivable.
      */
-    public function show($id)
+    public function edit($id)
     {
-        $receivable = Receivable::with('customer')->findOrFail($id);
-        return response()->json($receivable);
+        $receivable = Receivable::findOrFail($id);
+        $customers = Customer::all();
+
+        return view('backviews.pages.receivable.update', compact('receivable', 'customers'));
     }
 
     /**
@@ -59,7 +65,7 @@ class ReceivableController extends Controller
             'customer_id' => 'sometimes|required|exists:customers,id',
             'total_cost' => 'sometimes|required|numeric',
             'due_date' => 'sometimes|required|date',
-            'payment_status' => 'sometimes|required|in:lunas,belum_lunas',
+            'payment_status' => 'sometimes|required|in:lunas,belum lunas',
             'description' => 'nullable|string',
         ]);
 
@@ -67,10 +73,7 @@ class ReceivableController extends Controller
         $receivable = Receivable::findOrFail($id);
         $receivable->update($validated);
 
-        return response()->json([
-            'message' => 'Receivable updated successfully',
-            'data' => $receivable,
-        ], 200);
+        return redirect()->route('admin.receivables.index')->with('success', 'Piutang berhasil diperbarui.');
     }
 
     /**
@@ -81,8 +84,6 @@ class ReceivableController extends Controller
         $receivable = Receivable::findOrFail($id);
         $receivable->delete();
 
-        return response()->json([
-            'message' => 'Receivable deleted successfully',
-        ], 200);
+        return redirect()->route('admin.receivables.index')->with('success', 'Piutang berhasil dihapus.');
     }
 }
