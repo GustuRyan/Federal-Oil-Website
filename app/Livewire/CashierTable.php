@@ -10,6 +10,7 @@ class CashierTable extends Component
 {
     public $type;
     public $items;
+    public $sub_total;
 
     public $isProductFormVisible = false; 
     public $isServiceFormVisible = false; 
