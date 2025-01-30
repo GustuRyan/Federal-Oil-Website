@@ -5,6 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Optional JavaScript and Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
     @vite('resources/css/app.css')
     <title>Worshop Admin</title>
 </head>
@@ -14,43 +22,49 @@
             'title' => 'Dashboard',
             'icon' => '',
             'route' => 'admin.dashboard',
-            'root' => 'admin.dashboard'
+            'root' => 'admin.dashboard',
         ],
         [
             'title' => 'Stok',
             'icon' => '',
             'route' => 'admin.stocks.index',
-            'root' => 'admin.stocks.*'
+            'root' => 'admin.stocks.*',
         ],
         [
             'title' => 'Pemasukan',
             'icon' => '',
             'route' => 'admin.income.index',
-            'root' => 'admin.income.*'
+            'root' => 'admin.income.*',
         ],
         [
             'title' => 'Pengeluaran',
             'icon' => '',
             'route' => 'admin.spending.index',
-            'root' => 'admin.spending.*'
+            'root' => 'admin.spending.*',
         ],
         [
             'title' => 'Piutang',
             'icon' => '',
             'route' => 'admin.receivables.index',
-            'root' => 'admin.receivables.*'
+            'root' => 'admin.receivables.*',
         ],
         [
             'title' => 'Pelanggan',
             'icon' => '',
             'route' => 'admin.customer.index',
-            'root' => 'admin.customer.*'
+            'root' => 'admin.customer.*',
+        ],
+        [
+            'title' => 'Servis',
+            'icon' => '',
+            'route' => 'admin.service.index',
+            'root' => 'admin.service.*',
         ],
         [
             'title' => 'Kasir',
             'icon' => '',
             'route' => 'cashier',
-            'root' => 'cashier'
+            'root' => 'cashier',
         ],
     ];
 @endphp
@@ -75,16 +89,16 @@
                     @foreach ($menus as $item)
                         @if (request()->routeIs($item['root']))
                             <li class="bg-bold-blue rounded-lg hover:opacity-85 border-2">
-                                <a href="{{route($item['route'])}}" class=" font-bold flex items-center gap-3 p-3">
+                                <a href="{{ route($item['route']) }}" class=" font-bold flex items-center gap-3 p-3">
                                     <div class="rounded-full w-4 h-4 bg-white"></div>
                                 @else
                             <li class="text-bold-blue bg-white rounded-lg hover:bg-blue-100">
-                                <a href="{{route($item['route'])}}" class=" font-bold flex items-center gap-3 p-3">
+                                <a href="{{ route($item['route']) }}" class=" font-bold flex items-center gap-3 p-3">
                                     <div class="rounded-full w-4 h-4 bg-bold-blue"></div>
                         @endif
-                        <p>{{ $item['title'] }}</p>
-                        </a>
-                        </li>
+                                    <p>{{ $item['title'] }}</p>
+                                </a>
+                            </li>
                     @endforeach
                 </ul>
             </div>
