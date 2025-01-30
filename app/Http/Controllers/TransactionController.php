@@ -23,20 +23,31 @@ class TransactionController extends Controller
     return view('frontviews.index', compact('customers', 'products', 'services'));
   }
 
-  public function index() {
-    $transactions = Transaction::paginate(10);
+  public function index(Request $request)
+  {
+    $query = Transaction::query();
+    $searchTerm = null;
 
-    return view('backviews.pages.income.index', compact('transactions'));
+    if ($request->has('search') && !empty($request->search)) {
+      $searchTerm = $request->search;
+      $query->where('invoice', 'like', '%' . $searchTerm . '%');
+    }
+
+    $transactions = $query->paginate(10);
+
+    return view('backviews.pages.income.index', compact('transactions', 'searchTerm'));
   }
-  
-  public function edit($id) {
+
+  public function edit($id)
+  {
     $transaction = Transaction::findOrFail($id);
     $customers = Customer::all();
 
     return view('backviews.pages.income.update', compact('transaction', 'customers'));
   }
 
-  public function detail($id) {
+  public function detail($id)
+  {
     $products = TransactionDetail::where('transaction_id', $id)->where('product_id', '!=', null)->get();
     $services = TransactionDetail::where('transaction_id', $id)->where('service_id', '!=', null)->get();
 
@@ -119,11 +130,11 @@ class TransactionController extends Controller
       $dueDate = Carbon::now()->addDays(3);
 
       $addReceivable = [
-       'customer_id' => $transaction->customer_id,
-       'total_cost' => $transaction->total_cost,
-       'due_date' => $dueDate,
-       'payment_status' => $transaction->payment_status,
-       'description' => $transaction->description,
+        'customer_id' => $transaction->customer_id,
+        'total_cost' => $transaction->total_cost,
+        'due_date' => $dueDate,
+        'payment_status' => $transaction->payment_status,
+        'description' => $transaction->description,
       ];
 
       $receivable = Receivable::create($addReceivable);
@@ -139,7 +150,7 @@ class TransactionController extends Controller
       ];
 
       if ($cart->product_id) {
-        $updateStock = [ 'latest_stock' => $cart->product->latest_stock - $cart->amount];
+        $updateStock = ['latest_stock' => $cart->product->latest_stock - $cart->amount];
 
         $product = Product::findOrFail($cart->product_id);
         $product->update($updateStock);
