@@ -25,6 +25,8 @@ class TransactionDetail extends Model
         'transaction_id',
         'product_id',
         'amount',
+        'service_id',
+        'service_time',
     ];
 
     /**
@@ -55,5 +57,10 @@ class TransactionDetail extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 }
