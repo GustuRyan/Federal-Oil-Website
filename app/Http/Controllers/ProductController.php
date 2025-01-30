@@ -10,11 +10,28 @@ class ProductController extends Controller
     /**
      * Display a listing of the products.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(10);
-        return view('backviews.pages.stock.index', compact('products'));
+        $query = Product::query();
+        $searchTerm = $request->search ?? null;
+        $categoryTerm = $request->category ?? null;
+
+        if (!empty($searchTerm)) {
+            $query->where('product_name', 'like', '%' . $searchTerm . '%');
+        }
+
+        if (!empty($categoryTerm) && $categoryTerm !== 'all') {
+            $query->where('product_category', $categoryTerm);
+        }
+
+        $products = $query->paginate(10);
+
+        // Mengambil kategori unik dari produk
+        $categories = Product::pluck('product_category')->unique();
+
+        return view('backviews.pages.stock.index', compact('products', 'searchTerm', 'categories', 'categoryTerm'));
     }
+
 
     /**
      * Store a newly created product in storage.
