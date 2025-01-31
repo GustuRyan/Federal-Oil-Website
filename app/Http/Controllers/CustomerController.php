@@ -10,7 +10,7 @@ class CustomerController extends Controller
     /**
      * Display a listing of the customers.
      */
-    public function index()
+    public function index(Request $request)
     {
         $customers = Customer::paginate(10);
         return view('backviews.pages.customer.index', compact('customers'));
