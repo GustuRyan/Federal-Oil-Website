@@ -11,7 +11,7 @@ class ReceivableController extends Controller
     /**
      * Display a listing of receivables.
      */
-    public function index()
+    public function index(Request $request)
     {
         $receivables = Receivable::paginate(10);
         return view('backviews.pages.receivable.index', compact('receivables'));
