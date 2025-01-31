@@ -8,7 +8,7 @@ use App\Models\Service;
 class ServiceController extends Controller
 {
     // Fetch all services
-    public function index()
+    public function index(Request $request)
     {
         $services = Service::paginate(10);
         return view('backviews.pages.service.index', compact('services'));
