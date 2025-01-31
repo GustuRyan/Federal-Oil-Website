@@ -10,7 +10,7 @@ class SpendingController extends Controller
     /**
      * Display a listing of the spending records.
      */
-    public function index()
+    public function index(Request $request)
     {
         $spendings = Spending::paginate(10);
         return view('backviews.pages.spending.index', compact('spendings'));
