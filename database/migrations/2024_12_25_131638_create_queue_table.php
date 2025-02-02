@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('queue', function (Blueprint $table) {
+        Schema::create('queues', function (Blueprint $table) {
             $table->id();
             $table->integer('current_queue')->default(0);
             $table->json('queue_list')->nullable();
+            $table->integer('last_queue')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('queue');
+        Schema::dropIfExists('queues');
     }
 };
