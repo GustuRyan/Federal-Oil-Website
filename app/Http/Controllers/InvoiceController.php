@@ -19,8 +19,23 @@ class InvoiceController extends Controller
                 'name' => 'Slamet Maryadi Usada',
                 'address' => 'Ps. Peta No. 506, Mojokerto 49077, KalBar',
                 'phone' => '627502388871',
-                'email' => 'uchita.oktaviani@salahudin.desa.id'
-            ]
+                'email' => 'uchita.oktaviani@salahudin.desa.id',
+            ],
+            'products' => [
+                [
+                    'name' => 'Moslem Brown Blue Dress',
+                    'description' => 'Ukuran M',
+                    'quantity' => 3,
+                    'price' => 199000,
+                    'discount' => 0,
+                    'tax' => 10,
+                    'total' => 597000,
+                ]
+            ],
+            'subtotal' => 542727.27,
+            'tax' => 54722.73,
+            'total' => 597000,
+            'bank' => 'XXXXXXXX BCA a/n PT. ABC',
         ];
 
         $pdf = PDF::loadView('invoice', $data);
