@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spending', function (Blueprint $table) {
+        Schema::create('spends', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
             $table->enum('spending_type', allowed:['biaya operasional', 'biaya suku cadang', 'gaji']);
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('spending');
+        Schema::dropIfExists('spends');
     }
 };
