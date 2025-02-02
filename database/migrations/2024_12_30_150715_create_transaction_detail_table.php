@@ -10,13 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('transaction_detail', function (Blueprint $table) {
-            $table->id();
+        Schema::create('transaction_details', function (Blueprint $table) {
+            $table->id(); 
             $table->timestamps();
-            $table->foreignId('transaction_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('product_id')->constrained()->cascadeOnDelete();
+            $table->unsignedBigInteger('transaction_id'); 
+            $table->unsignedBigInteger('product_id'); 
             $table->integer('amount');
+        
+            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
+            
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
+        
     }
 
     /**
@@ -24,6 +29,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('transaction_detail');
+        Schema::dropIfExists('transaction_details');
     }
 };
