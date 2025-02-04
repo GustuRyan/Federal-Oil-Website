@@ -11,6 +11,8 @@ use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Charts\MonthlyChart;
+use App\Charts\RevenueChart;
 
 class TransactionController extends Controller
 {
@@ -23,7 +25,7 @@ class TransactionController extends Controller
     return view('frontviews.index', compact('customers', 'products', 'services'));
   }
 
-  public function index(Request $request)
+  public function index(Request $request, MonthlyChart $chart, RevenueChart $revenueChart)
   {
     $query = Transaction::query();
     $searchTerm = null;
@@ -35,8 +37,18 @@ class TransactionController extends Controller
 
     $transactions = $query->paginate(10);
 
-    return view('backviews.pages.income.index', compact('transactions', 'searchTerm'));
+    // Generate chart data
+    $chartData = $chart->build();
+    $chartRevenue = $revenueChart->build();
+
+    return view('backviews.pages.income.index', compact(
+      'transactions',
+      'searchTerm',
+      'chartData',
+      'chartRevenue'
+    ));
   }
+
 
   public function edit($id)
   {
