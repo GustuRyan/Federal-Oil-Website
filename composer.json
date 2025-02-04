@@ -6,12 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "arielmejiadev/larapex-charts": "^8.1",
         "barryvdh/laravel-snappy": "^1.0",
         "blade-ui-kit/blade-icons": "^1.7",
+        "consoletvs/charts": "^6.7",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "laraveldaily/laravel-charts": "^0.2.3",
         "livewire/livewire": "^3.5",
         "realrashid/sweet-alert": "^7.2"
     },
