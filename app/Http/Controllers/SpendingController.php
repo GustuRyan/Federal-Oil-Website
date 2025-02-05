@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\MonthlySpendChart;
+use App\Charts\SpendingChart;
 use App\Models\Spending;
 use Illuminate\Http\Request;
 
@@ -10,10 +12,30 @@ class SpendingController extends Controller
     /**
      * Display a listing of the spending records.
      */
-    public function index(Request $request)
+    public function index(Request $request, MonthlySpendChart $chart, SpendingChart $spendChart)
     {
-        $spendings = Spending::paginate(10);
-        return view('backviews.pages.spending.index', compact('spendings'));
+        $query = Spending::query();
+        $searchTerm = $request->search ?? null;
+        $typeTerm = $request->category ?? null;
+
+        if (!empty($searchTerm)) {
+            $query->where('distributor', 'like', '%' . $searchTerm . '%');
+        }
+
+        if (!empty($typeTerm) && $typeTerm !== 'all') {
+            $query->where('spending_type', $typeTerm);
+        }
+
+        $chartData = $chart->build();
+        $chartSpend = $spendChart->build();
+
+        $spendings = $query->paginate(10);
+        return view('backviews.pages.spending.index', compact(
+            'spendings',
+            'chartData',
+            'chartSpend',
+            'searchTerm'
+        ));
     }
 
     /**
