@@ -13,8 +13,26 @@ class ReceivableController extends Controller
      */
     public function index(Request $request)
     {
-        $receivables = Receivable::paginate(10);
-        return view('backviews.pages.receivable.index', compact('receivables'));
+        $query = Receivable::query();
+        $searchTerm = $request->search ?? null;
+        $statusTerm = $request->status ?? null;
+
+        if (!empty($searchTerm)) {
+            $query->whereHas('customer', function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        if (!empty($statusTerm) && $statusTerm != 'all') {
+            $query->where('payment_status', $statusTerm);
+        }
+
+        $receivables = $query->paginate(10);
+        return view('backviews.pages.receivable.index', compact(
+            'receivables',
+            'searchTerm',
+            'statusTerm'
+        ));
     }
 
     /**
