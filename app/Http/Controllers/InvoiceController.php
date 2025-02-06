@@ -5,9 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use Illuminate\Support\Facades\View;
+use App\Charts\MonthlyChart;
+use App\Charts\RevenueChart;
+use App\Charts\MonthlySpendChart;
+use App\Charts\SpendingChart;
 
 class InvoiceController extends Controller
 {
+    public function index(MonthlyChart $chart, RevenueChart $revenueChart, MonthlySpendChart $chart1, SpendingChart $spendChart)
+    {
+        $titles = [
+            'Total Item Keluar', 'Total Pendapatan Bulan Ini', 'Total Pengeluaran Bulan Ini'
+        ];
+
+        
+
+        // Generate chart data
+        $chartData = $chart->build();
+        $chartRevenue = $revenueChart->build();
+        $spendData = $chart1->build();
+        $chartSpend = $spendChart->build();
+
+        return view('backviews.pages.index', compact('chartData', 'chartRevenue', 'spendData', 'chartSpend'));
+    }
+
     public function generatePDF()
     {
         $data = [
