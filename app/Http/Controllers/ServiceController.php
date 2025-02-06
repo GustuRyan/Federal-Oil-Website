@@ -10,8 +10,15 @@ class ServiceController extends Controller
     // Fetch all services
     public function index(Request $request)
     {
-        $services = Service::paginate(10);
-        return view('backviews.pages.service.index', compact('services'));
+        $query = Service::query();
+        $searchTerm = $request->search ?? null;
+
+        if (!empty($searchTerm)) {
+            $query->where('service_name', 'like', '%'. $searchTerm .'%');
+        }
+
+        $services = $query->paginate(10);
+        return view('backviews.pages.service.index', compact('services', 'searchTerm'));
     }
 
     // Create a new service
