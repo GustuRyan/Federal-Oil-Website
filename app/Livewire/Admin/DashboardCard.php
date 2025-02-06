@@ -7,6 +7,9 @@ use Livewire\Component;
 class DashboardCard extends Component
 {
     public $bgColor;
+    public $title;
+    public $value;
+    public $time;
 
     public function mount($bgColor)
     {
