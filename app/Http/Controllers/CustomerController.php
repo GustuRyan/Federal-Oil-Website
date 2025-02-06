@@ -12,8 +12,15 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $customers = Customer::paginate(10);
-        return view('backviews.pages.customer.index', compact('customers'));
+        $query = Customer::query();
+        $searchTerm = $request->search ?? null;
+
+        if (!empty($searchTerm)) {
+            $query->where('name', 'like','%' . $searchTerm . '%' );
+        }
+
+        $customers = $query->paginate(10);
+        return view('backviews.pages.customer.index', compact('customers', 'searchTerm'));
     }
 
     /**
