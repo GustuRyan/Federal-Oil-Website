@@ -26,32 +26,78 @@ class TransactionController extends Controller
   }
 
   public function index(Request $request, MonthlyChart $chart, RevenueChart $revenueChart)
-{
+  {
     $query = Transaction::query();
     $searchTerm = $request->search ?? null;
     $methodTerm = $request->method ?? null;
     $statusTerm = $request->status ?? null;
 
     if (!empty($searchTerm)) {
-        $query->where(function ($q) use ($searchTerm) {
-            $q->where('invoice', 'like', '%' . $searchTerm . '%')
-              ->orWhereHas('customer', function ($q) use ($searchTerm) {
-                  $q->where('name', 'like', '%' . $searchTerm . '%');
-              });
-        });
+      $query->where(function ($q) use ($searchTerm) {
+        $q->where('invoice', 'like', '%' . $searchTerm . '%')
+          ->orWhereHas('customer', function ($q) use ($searchTerm) {
+            $q->where('name', 'like', '%' . $searchTerm . '%');
+          });
+      });
     }
 
     if (!empty($methodTerm) && $methodTerm != 'all') {
-        $query->where('payment_methods', $methodTerm);
+      $query->where('payment_methods', $methodTerm);
     }
 
     if (!empty($statusTerm) && $statusTerm != 'all') {
-        $query->where('payment_status', $statusTerm);
+      $query->where('payment_status', $statusTerm);
     }
 
-    if ( !empty($request->sort) && in_array($request->sort, ['asc', 'desc'])) {
-        $query->orderBy('total_cost', $request->sort);
+    if (!empty($request->sort) && in_array($request->sort, ['asc', 'desc'])) {
+      $query->orderBy('total_cost', $request->sort);
     }
+
+    $currentDate = Carbon::now()->day;
+    $totalDaysInMonth = Carbon::now()->daysInMonth;
+
+    $formattedDate = $currentDate . '/' . $totalDaysInMonth;
+
+    $totalAmount = TransactionDetail::whereNull('service_id')
+      ->whereNotNull('product_id')
+      ->whereMonth('created_at', Carbon::now()->month)
+      ->whereYear('created_at', Carbon::now()->year)
+      ->sum('amount');
+
+    $totalAmountDay = TransactionDetail::whereNull('service_id')
+      ->whereNotNull('product_id')
+      ->where('created_at', Carbon::now())
+      ->sum('amount');
+
+    $totalIncome = Transaction::whereMonth('created_at', Carbon::now()->month)
+      ->whereYear('created_at', Carbon::now()->year)
+      ->sum('total_cost');
+
+    $totalIncomeDay = Transaction::where('created_at', Carbon::now())
+      ->sum('total_cost');
+
+    $cardResources = collect([
+      [
+        'title' => 'Total Item Keluar Bulan Ini',
+        'value' => $totalAmount,
+        'time' => $formattedDate
+      ],
+      [
+        'title' => 'Total Pendapatan Bulan Ini',
+        'value' => $totalIncome,
+        'time' => $formattedDate
+      ],
+      [
+        'title' => 'Total Item Keluar Hari Ini',
+        'value' => $totalAmountDay,
+        'time' => $formattedDate
+      ],
+      [
+        'title' => 'Total Pendapatan Hari Ini',
+        'value' => $totalIncomeDay,
+        'time' => $formattedDate
+      ],
+    ]);
 
     // Pagination
     $transactions = $query->paginate(10);
@@ -61,12 +107,13 @@ class TransactionController extends Controller
     $chartRevenue = $revenueChart->build();
 
     return view('backviews.pages.income.index', compact(
-        'transactions',
-        'searchTerm',
-        'chartData',
-        'chartRevenue'
+      'transactions',
+      'searchTerm',
+      'chartData',
+      'chartRevenue',
+      'cardResources'
     ));
-}
+  }
 
   public function edit($id)
   {
@@ -193,6 +240,7 @@ class TransactionController extends Controller
 
     return redirect()->route('cashier')->with([
       'success' => 'Transaksi berhasil ditambahkan.',
+      'invoice_url' => route('invoice.pdf', $transaction->id),
     ]);
   }
 
