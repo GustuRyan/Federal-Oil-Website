@@ -16,7 +16,6 @@ class SpendingChart
 
     public function build()
     {
-        // Ambil total pendapatan per bulan
         $revenues = Spending::selectRaw('MONTH(created_at) as month, SUM(total_cost) as total')
             ->groupBy('month')
             ->orderBy('month')
