@@ -17,7 +17,6 @@ class MonthlySpendChart
 
     public function build()
     {
-        // Ambil data transaksi per bulan
         $data = Spending::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
             ->groupBy('month')
             ->orderBy('month')
