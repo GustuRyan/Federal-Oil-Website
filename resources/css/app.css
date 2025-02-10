@@ -25,3 +25,8 @@ th {
     scrollbar-width: none;
     /* Firefox */
 }
+
+.img-white {
+    filter: invert(1);
+  }
+  
