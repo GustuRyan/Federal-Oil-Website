@@ -24,6 +24,8 @@ class Cart extends Model
     protected $fillable = [
         'product_id',
         'amount',
+        'queue',
+        'price',
         'service_id',
         'service_time',
     ];
