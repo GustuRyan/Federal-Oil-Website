@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
+use App\Models\Queue;
 
 class CartController extends Controller
 {
@@ -14,8 +15,14 @@ class CartController extends Controller
             'product_id' => 'nullable|exists:products,id',
             'service_id' => 'nullable|exists:services,id',
             'amount' => 'nullable|integer|min:1',
+            'price' => 'nullable|numeric|min:1',
             'service_time' => 'nullable|integer',
         ]);
+
+        $today = now()->toDateString();
+        $queue = Queue::whereDate('created_at', $today)->first();
+        
+        $validated['queue'] = $queue ? $queue->current_queue : 1;
 
         // Ensure only one of product_id or service_id is filled
         if (!empty($validated['product_id']) && !empty($validated['service_id'])) {
@@ -24,7 +31,7 @@ class CartController extends Controller
 
         if (!empty($validated['product_id'])) {
             // Check if the product already exists in the cart
-            $cart = Cart::where('product_id', $validated['product_id'])->first();
+            $cart = Cart::where('product_id', $validated['product_id'])->where('queue', $validated['queue'])->first();
             if ($cart) {
                 // Update amount if the product exists
                 $cart->amount += 1;
@@ -32,7 +39,7 @@ class CartController extends Controller
 
                 return redirect()->route('cashier')->with([
                     'success' => 'Keranjang berhasil ditambahkan.',
-                    'scroll' => true, 
+                    'scroll' => true,
                 ]);
             }
 
@@ -46,7 +53,7 @@ class CartController extends Controller
 
         return redirect()->route('cashier')->with([
             'success' => 'Keranjang berhasil ditambahkan.',
-            'scroll' => true, 
+            'scroll' => true,
         ]);
     }
 
@@ -63,8 +70,9 @@ class CartController extends Controller
 
         // Validasi hanya untuk amount dan service_time
         $validated = $request->validate([
-            'amount' => 'nullable|integer|min:1', // amount boleh kosong, tapi jika diisi harus minimal 1
-            'service_time' => 'nullable|integer', // service_time boleh kosong dan harus integer jika diisi
+            'amount' => 'nullable|integer|min:1',
+            'price' => 'nullable|integer|min:1',
+            'service_time' => 'nullable|integer',
         ]);
 
         // Update hanya field yang divalidasi
@@ -72,7 +80,7 @@ class CartController extends Controller
 
         return redirect()->route('cashier')->with([
             'success' => 'Keranjang berhasil diperbarui.',
-            'scroll' => true, 
+            'scroll' => true,
         ]);
     }
 
@@ -90,7 +98,7 @@ class CartController extends Controller
 
         return redirect()->route('cashier')->with([
             'success' => 'Keranjang berhasil dihapus.',
-            'scroll' => true, 
+            'scroll' => true,
         ]);
     }
 }
