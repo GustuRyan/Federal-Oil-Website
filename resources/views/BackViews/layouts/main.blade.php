@@ -144,7 +144,7 @@
             </div>
             <div class="bg-white w-full h-[92vh] rounded-tl-[36px] px-8 pt-8">
                 <div class="w-full h-[8vh] border-b-4 pb-4">
-                    <h1 class="text-[40px] font-bold text-bold-blue leading-none">
+                    <h1 class="text-4xl md:text-[40px] font-bold text-bold-blue leading-none">
                         @yield('title-content')
                     </h1>
                 </div>
