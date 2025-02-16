@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Receivable;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
+use App\Models\UserQueue;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Charts\MonthlyChart;
@@ -19,10 +20,16 @@ class TransactionController extends Controller
   public function dashboard()
   {
     $customers = Customer::all();
-    $products = Cart::where('product_id', '!=', null)->get();
-    $services = Cart::where('service_id', '!=', null)->get();
 
-    return view('frontviews.index', compact('customers', 'products', 'services'));
+    $today = now()->toDateString();
+    $queue = Queue::whereDate('created_at', $today)->first();
+
+    $products = Cart::where('product_id', '!=', null)->where('queue', $queue->current_queue)->get();
+    $services = Cart::where('service_id', '!=', null)->where('queue', $queue->current_queue)->get();
+
+    $userQueue = UserQueue::where('queue', $queue->current_queue)->first();
+
+    return view('frontviews.index', compact('customers', 'products', 'services', 'userQueue'));
   }
 
   public function index(Request $request, MonthlyChart $chart, RevenueChart $revenueChart)
