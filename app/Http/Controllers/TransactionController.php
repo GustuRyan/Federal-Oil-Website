@@ -24,12 +24,23 @@ class TransactionController extends Controller
     $today = now()->toDateString();
     $queue = Queue::whereDate('created_at', $today)->first();
 
-    $products = Cart::where('product_id', '!=', null)->where('queue', $queue->current_queue)->get();
-    $services = Cart::where('service_id', '!=', null)->where('queue', $queue->current_queue)->get();
+    $products = collect();
+    $services = collect();
+    $userQueue = collect();
+    $issue = null;
+    $currentCustomer = null;
 
-    $userQueue = UserQueue::where('queue', $queue->current_queue)->first();
+    if ($queue) {
+      $products = Cart::where('product_id', '!=', null)->where('queue', $queue->current_queue)->get();
+      $services = Cart::where('service_id', '!=', null)->where('queue', $queue->current_queue)->get();
 
-    return view('frontviews.index', compact('customers', 'products', 'services', 'userQueue'));
+      $userQueue = UserQueue::where('queue', $queue->current_queue)->first();
+      $issue = $userQueue->issue ?? null;
+      $currentCustomer = $userQueue->customer_id ?? null;
+    }
+
+
+    return view('frontviews.index', compact('customers', 'products', 'services', 'issue', 'currentCustomer'));
   }
 
   public function index(Request $request, MonthlyChart $chart, RevenueChart $revenueChart)
@@ -165,6 +176,42 @@ class TransactionController extends Controller
     $today = now()->toDateString();
     $queue = Queue::whereDate('created_at', $today)->first();
 
+    $transaction = Transaction::create($request->all());
+    $carts = Cart::where('queue', $queue->current_queue)->get();
+
+    if ($transaction->payment_status == "belum lunas") {
+      $dueDate = Carbon::now()->addDays(3);
+
+      $addReceivable = [
+        'customer_id' => $transaction->customer_id,
+        'total_cost' => $transaction->total_cost,
+        'due_date' => $dueDate,
+        'payment_status' => $transaction->payment_status,
+        'description' => $transaction->description,
+      ];
+
+      $receivable = Receivable::create($addReceivable);
+    }
+
+    foreach ($carts as $cart) {
+      $addTransDetail = [
+        'transaction_id' => $transaction->id,
+        'product_id' => $cart->product_id,
+        'amount' => $cart->amount,
+        'service_id' => $cart->service_id,
+        'service_time' => $cart->service_time,
+      ];
+
+      if ($cart->product_id) {
+        $updateStock = ['latest_stock' => $cart->product->latest_stock - $cart->amount];
+
+        $product = Product::findOrFail($cart->product_id);
+        $product->update($updateStock);
+      }
+
+      $transDetail = TransactionDetail::create($addTransDetail);
+    }
+
     if ($queue) {
       $queueList = $queue->queue_list;
 
@@ -207,43 +254,9 @@ class TransactionController extends Controller
       $queue = Queue::create($updateQueue);
     }
 
-    $transaction = Transaction::create($request->all());
-    $carts = Cart::all();
-
-    if ($transaction->payment_status == "belum lunas") {
-      $dueDate = Carbon::now()->addDays(3);
-
-      $addReceivable = [
-        'customer_id' => $transaction->customer_id,
-        'total_cost' => $transaction->total_cost,
-        'due_date' => $dueDate,
-        'payment_status' => $transaction->payment_status,
-        'description' => $transaction->description,
-      ];
-
-      $receivable = Receivable::create($addReceivable);
-    }
-
     foreach ($carts as $cart) {
-      $addTransDetail = [
-        'transaction_id' => $transaction->id,
-        'product_id' => $cart->product_id,
-        'amount' => $cart->amount,
-        'service_id' => $cart->service_id,
-        'service_time' => $cart->service_time,
-      ];
-
-      if ($cart->product_id) {
-        $updateStock = ['latest_stock' => $cart->product->latest_stock - $cart->amount];
-
-        $product = Product::findOrFail($cart->product_id);
-        $product->update($updateStock);
-      }
-
-      $transDetail = TransactionDetail::create($addTransDetail);
+      $cart->delete();
     }
-
-    Cart::truncate();
 
     return redirect()->route('cashier')->with([
       'success' => 'Transaksi berhasil ditambahkan.',
