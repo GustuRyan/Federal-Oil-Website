@@ -17,23 +17,21 @@ class MonthlyChart
     public function build()
     {
         // Ambil data transaksi per bulan
-        $data = Transaction::selectRaw('MONTH(created_at) as month, COUNT(*) as total')
-            ->groupBy('month')
+        $data = Transaction::selectRaw('MONTH(created_at) as month, MONTHNAME(created_at) as month_name, COUNT(*) as total')
+            ->groupBy('month', 'month_name') // Tambahkan 'month_name' agar sesuai dengan SELECT
             ->orderBy('month')
-            ->pluck('total')
-            ->toArray();
+            ->get();
 
-        $months = Transaction::selectRaw('MONTHNAME(created_at) as month')
-            ->groupBy('month')
-            ->orderByRaw('MONTH(created_at)')
-            ->pluck('month')
-            ->toArray();
+        // Pisahkan data ke dalam array
+        $totals = $data->pluck('total')->toArray();
+        $months = $data->pluck('month_name')->toArray();
 
         return $this->chart->barChart()
             ->setTitle('Jumlah Transaksi per Bulan')
             ->setSubtitle('Data dalam 1 tahun terakhir')
-            ->addData('Total Transaksi', $data)
+            ->addData('Total Transaksi', $totals) // Ubah dari $data ke $totals
             ->setLabels($months)
             ->setHeight(300);
+
     }
 }
