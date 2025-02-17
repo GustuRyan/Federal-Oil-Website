@@ -4,18 +4,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserQueue;
+use App\Models\Queue;
 
 class UserQueueController extends Controller
 {
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'queue' => 'required|integer',
-            'customer_id' => 'required|exists:customers,id',
+            'customer_id' => 'nullable|exists:customers,id',
             'issue' => 'nullable|string',
         ]);
 
-        $userQueue = UserQueue::create($validated);
+        $today = now()->toDateString();
+        $queue = Queue::whereDate('created_at', $today)->first();
+
+        if (!$queue) {
+            $updateQueue = [
+                'current_queue' => 1,
+                'queue_list' => [1, 2],
+                'last_queue' => 2,
+            ];
+
+            $queue = Queue::create($updateQueue);
+        }
+        
+        $validated['queue'] = $queue ? $queue->current_queue : 1;
+
+        $available = $queue ? UserQueue::where('queue', $queue->current_queue)->first() : null;
+
+        if ($available) {
+            $available->update($validated);
+        } else {
+            $userQueue = UserQueue::create($validated);
+        }
 
         return redirect()->back()->with('success', 'Antrean berhasil ditambahkan.');
     }
@@ -23,10 +44,14 @@ class UserQueueController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'queue' => 'required|integer',
-            'customer_id' => 'required|exists:customers,id',
+            'customer_id' => 'nullable|exists:customers,id',
             'issue' => 'nullable|string',
         ]);
+
+        $today = now()->toDateString();
+        $queue = Queue::whereDate('created_at', $today)->first();
+        
+        $validated['queue'] = $queue ? $queue->current_queue : 1;
 
         $userQueue = UserQueue::findOrFail($id);
         $userQueue->update($validated);
