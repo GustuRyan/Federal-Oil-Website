@@ -21,8 +21,18 @@ class CartController extends Controller
 
         $today = now()->toDateString();
         $queue = Queue::whereDate('created_at', $today)->first();
-        
+
         $validated['queue'] = $queue ? $queue->current_queue : 1;
+
+        if (!$queue) {
+            $updateQueue = [
+                'current_queue' => 1,
+                'queue_list' => [1, 2],
+                'last_queue' => 2,
+            ];
+
+            $queue = Queue::create($updateQueue);
+        }
 
         // Ensure only one of product_id or service_id is filled
         if (!empty($validated['product_id']) && !empty($validated['service_id'])) {
@@ -71,7 +81,7 @@ class CartController extends Controller
         // Validasi hanya untuk amount dan service_time
         $validated = $request->validate([
             'amount' => 'nullable|integer|min:1',
-            'price' => 'nullable|integer|min:1',
+            'price' => 'nullable|numeric|min:1',
             'service_time' => 'nullable|integer',
         ]);
 
