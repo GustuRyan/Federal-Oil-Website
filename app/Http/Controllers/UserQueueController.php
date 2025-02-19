@@ -30,7 +30,7 @@ class UserQueueController extends Controller
         
         $validated['queue'] = $queue ? $queue->current_queue : 1;
 
-        $available = $queue ? UserQueue::where('queue', $queue->current_queue)->first() : null;
+        $available = $queue ? UserQueue::where('queue', $queue->current_queue)->whereDate('created_at', $today)->first() : null;
 
         if ($available) {
             $available->update($validated);
