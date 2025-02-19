@@ -34,11 +34,12 @@ class TransactionController extends Controller
       $products = Cart::where('product_id', '!=', null)->where('queue', $queue->current_queue)->get();
       $services = Cart::where('service_id', '!=', null)->where('queue', $queue->current_queue)->get();
 
-      $userQueue = UserQueue::where('queue', $queue->current_queue)->first();
+      $userQueue = UserQueue::where('queue', $queue->current_queue)->whereDate('created_at', $today)->first();
       $issue = $userQueue->issue ?? null;
       $currentCustomer = $userQueue->customer_id ?? null;
     }
 
+    Cart::whereDate('created_at', '<', $today)->delete();
 
     return view('frontviews.index', compact('customers', 'products', 'services', 'issue', 'currentCustomer'));
   }
