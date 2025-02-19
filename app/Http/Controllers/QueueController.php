@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 use App\Models\Queue;
 
 class QueueController extends Controller
@@ -99,4 +100,20 @@ class QueueController extends Controller
             'message' => 'Queue deleted successfully',
         ], 200);
     }
+
+    public function generatePDF()
+    {
+        $today = now()->toDateString();
+        $queue = Queue::whereDate('created_at', $today)->first();
+
+        $data = ['current_queue' => $queue ? $queue->current_queue : 1];
+
+        $pdf = PDF::loadView('queue-ticket', compact('data')) // Mengirim sebagai compact array
+            ->setOption('page-width', '120mm')
+            ->setOption('page-height', '120mm')
+            ->setOption('orientation', 'portrait');
+
+        return $pdf->download('ticket.pdf');
+    }
+
 }
