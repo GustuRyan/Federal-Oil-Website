@@ -13,24 +13,24 @@
         </div>
     @endif
     <div class="w-full space-y-4">
-        <div class="w-full flex justify-between">
+        <form action="{{ route('admin.customer.index') }}" class="w-full flex flex-col md:flex-row md:item-center justify-between gap-3 md:gap-0">
             <h1 class="text-3xl font-bold text-bold-blue">
                 Daftar Pelanggan
             </h1>
-            <form class="flex items-center">
-                <input type="text" class="w-[28vw] p-2 rounded-l-lg bg-[#ECEDF3] border" placeholder="Cari disini...">
-                <button
+            <div class="flex items-center">
+                <input type="text" class="w-full md:w-[28vw] p-2 rounded-l-lg bg-[#ECEDF3] border" name="search" placeholder={{ $searchTerm ? $searchTerm : 'Cari disini...' }}>
+                <button type="submit"
                     class="w-12 p-2 border border-bold-blue bg-bold-blue rounded-r-lg flex justify-center items-center hover:opacity-85">
                     <img src="/icons/icon_search.svg" alt="" class="w-5 h-6">
                 </button>
-            </form>
+            </div>
             <a href="{{ route('admin.customer.create') }}"
                 class="w-28 h-9 py-1 px-2 font-bold bg-bold-blue rounded-lg text-white flex justify-between items-center hover:opacity-85">
                 Tambah
                 <img src="/icons/icon_plus.svg" alt="" class="w-4 h-4">
             </a>
-        </div>
-        <div class="w-full">
+        </form>
+        <div class="overflow-x-scroll scrollbar-hide">
             <table class="w-full border rounded-xl">
                 <thead>
                     <tr align="center" class="text-[#515769] bg-slate-100">
