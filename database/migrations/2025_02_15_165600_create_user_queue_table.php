@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -15,7 +14,10 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('queue');
-            $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
+            
+            $table->unsignedBigInteger('customer_id')->nullable();
+            $table->foreign('customer_id')->references('id')->on('customers')->cascadeOnDelete();
+
             $table->text('issue')->nullable();
         });
     }
