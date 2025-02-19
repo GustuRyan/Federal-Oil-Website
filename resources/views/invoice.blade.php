@@ -93,7 +93,6 @@
                 <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Kuantitas</th>
                 <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Harga</th>
                 <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Diskon</th>
-                <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Pajak</th>
                 <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Jumlah</th>
             </tr>
         </thead>
@@ -108,8 +107,6 @@
                         {{ number_format($product['price'], 0, ',', '.') }}</td>
                     <td style="border-bottom: 2px solid black; padding: 4px;" class="text-right">
                         {{ $product['discount'] }}%</td>
-                    <td style="border-bottom: 2px solid black; padding: 4px;" class="text-right">PPN
-                        {{ $product['tax'] }}%</td>
                     <td style="border-bottom: 2px solid black; padding: 4px;" class="text-right">Rp
                         {{ number_format($product['total'], 0, ',', '.') }}</td>
                 </tr>
@@ -124,7 +121,6 @@
                 <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Waktu Servis</th>
                 <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Harga</th>
                 <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Diskon</th>
-                <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Pajak</th>
                 <th style="border-top: 2px solid black; border-bottom: 2px solid black; padding: 4px;">Jumlah</th>
             </tr>
         </thead>
@@ -139,8 +135,6 @@
                         {{ number_format($service['price'], 0, ',', '.') }}</td>
                     <td style="border-bottom: 2px solid black; padding: 4px;" class="text-right">
                         {{ $service['discount'] }}%</td>
-                    <td style="border-bottom: 2px solid black; padding: 4px;" class="text-right">PPN
-                        {{ $service['tax'] }}%</td>
                     <td style="border-bottom: 2px solid black; padding: 4px;" class="text-right">Rp
                         {{ number_format($service['total'], 0, ',', '.') }}</td>
                 </tr>
@@ -157,14 +151,6 @@
                 </th>
                 <th align="right" style="width: 100%;">
                     <table>
-                        <tr align="right">
-                            <td>Subtotal</td>
-                            <td class="text-right">Rp {{ number_format($subtotal, 0, ',', '.') }}</td>
-                        </tr>
-                        <tr align="right">
-                            <td>Pajak</td>
-                            <td class="text-right">Rp {{ number_format($tax, 0, ',', '.') }}</td>
-                        </tr>
                         <tr align="right">
                             <th>Total</th>
                             <th class="text-right">Rp {{ number_format($total, 0, ',', '.') }}</th>
@@ -183,9 +169,6 @@
                     <br><br><br><br>
                     <p>(.......................................)</p>
                 </th>
-                <th align="center" style="width: 40%; border: 2px solid black; padding: 8px;">
-                    <p>Pesan: Silakan transfer ke rekening: <br> <strong>{{ $bank }}</strong></p>
-                </th>
                 <th align="right" style="width: 100%;">
                     <p>Dengan Hormat,</p>
                     <br><br><br><br>
@@ -194,6 +177,9 @@
             </tr>
         </thead>
     </table>
+    <div align="center" style="width: 40%; border: 2px solid black; padding: 8px;">
+        <p>Pesan: Silakan transfer ke rekening: <br> <strong>{{ $bank }}</strong></p>
+    </div>
 </body>
 
 </html>
