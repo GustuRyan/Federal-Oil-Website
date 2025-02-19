@@ -98,33 +98,36 @@ class InvoiceController extends Controller
             ],
             'products' => $products->map(function ($product) {
                 return [
-                    'name' => $product->product->product_name ?? 'N/A', 
+                    'name' => $product->product->product_name ?? 'N/A',
                     'description' => $product->product->description ?? '-',
                     'quantity' => $product->amount,
                     'price' => $product->product->selling_price,
                     'discount' => 0,
-                    'tax' => 11, 
-                    'total' => $product->product->selling_price*$product->amount*1.11,
+                    'tax' => 11,
+                    'total' => $product->product->selling_price * $product->amount,
                 ];
             })->toArray(),
             'services' => $services->map(function ($service) {
                 return [
-                    'name' => $service->service->service_name ?? 'N/A', 
+                    'name' => $service->service->service_name ?? 'N/A',
                     'description' => $service->service->description ?? '-',
-                    'quantity' => $service->service_time.' menit',
+                    'quantity' => $service->service_time . ' menit',
                     'price' => $service->service->service_price,
                     'discount' => 0,
-                    'tax' => 11, 
-                    'total' => $service->service->service_price*1.11,
+                    'tax' => 11,
+                    'total' => $service->service->service_price,
                 ];
             })->toArray(),
-            'subtotal' => round($transaction->total_cost / 1.11, 2),
-            'tax' => round($transaction->total_cost / 1.11 * 0.11, 2),
+            'subtotal' => round($transaction->total_cost, 2),
             'total' => $transaction->total_cost,
             'bank' => 'XXXXXXXX BCA a/n PT. ABC',
         ];
 
-        $pdf = PDF::loadView('invoice', $data)->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('invoice', $data)
+            ->setOption('page-width', '80mm')  // Lebar kertas 80mm
+            ->setOption('page-height', '200mm') // Tinggi kertas 200mm
+            ->setOption('orientation', 'portrait'); // Portrait mode
+
         return $pdf->download('invoice.pdf');
     }
 }
