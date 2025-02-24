@@ -10,7 +10,7 @@
         class="bg-light-blue rounded-xl shadow-lg w-full text-lg" method="POST">
         @csrf
         <div class="space-y-4 p-6">
-            <input type="hidden" id="customer-id-input" name="customer_id" value="">
+            <input type="hidden" id="customer-id-input" name="customer_id" value="{{ $customer_id }}">
             <input type="hidden" id="customer-id-input" name="invoice" value="{{ $invoiceNum }}">
             <div class="w-full pb-3 border-b-[3px] border-[#C3C1C7] text-bold-blue text-2xl font-bold">
                 Detail Transaksi
@@ -67,17 +67,13 @@
                         <p>Sub Total</p>
                         <p>Rp. {{ number_format($total_cost, 0, ',', '.') }}</p>
                     </div>
-                    <div class="flex justify-between">
-                        <p>Pajak</p>
-                        <p>Rp. {{ number_format($total_cost * 0.11, 0, ',', '.') }}</p>
-                    </div>
                     <div class="w-full h-[2px] bg-[#E6E6E6]"></div>
                     <div class="space-y-1">
                         <div class="w-full flex justify-between">
                             <h2 class="font-bold text-bold-blue">Total Keseluruhan</h2>
                             <p id="totalKeseluruhan">Rp.
-                                {{ number_format($total_cost + $total_cost * 0.11, 0, ',', '.') }}</p>
-                            <input type="hidden" name="total_cost" value="{{ $total_cost + $total_cost * 0.11 }}">
+                                {{ number_format($total_cost, 0, ',', '.') }}</p>
+                            <input type="hidden" name="total_cost" value="{{ $total_cost }}">
                         </div>
                         <div class="w-full flex justify-between">
                             <h2 class="font-semibold text-bold-blue">Jumlah Bayar</h2>
@@ -101,7 +97,7 @@
 </div>
 <script>
     function hitungKembalian() {
-        const totalKeseluruhan = {{ $total_cost + $total_cost * 0.11 }};
+        const totalKeseluruhan = {{ $total_cost }};
         const jumlahBayar = parseInt(document.getElementById('jumlahBayar').value) || 0;
         const kembalian = jumlahBayar - totalKeseluruhan;
 
