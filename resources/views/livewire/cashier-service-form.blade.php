@@ -12,6 +12,7 @@
                 </div>
                 <div class="flex flex-col">
                     <input type="hidden" name="service_id" value="{{ $service->id }}">
+                    <input type="hidden" name="price" value="{{ $service->service_price }}">
                     <label for="service_time" class="font-bold">Waktu Servis</label>
                     <input type="number" name="service_time" class="rounded-md p-1" placeholder="waktu service (menit)" required>
                 </div>
