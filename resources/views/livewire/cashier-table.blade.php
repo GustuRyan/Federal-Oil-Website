@@ -57,7 +57,10 @@
                                     <input type="number" name="service_time" value="{{ $item->service_time ?? '-' }}"
                                         class="w-16 bg-slate-100 p-2 rounded-md"> Menit
                                 </td>
-                                <td>Rp. {{ number_format($item->service->service_price, 0, ',', '.') }}</td>
+                                <td>
+                                    Rp. 
+                                    <input type="number" name="price" value="{{ $item->price }}" class="bg-slate-100 p-2 rounded-md">
+                                </td>
                                 <td align="center">
                                     <div class="flex gap-2 justify-center">
                                         <button type="submit"
@@ -94,7 +97,9 @@
                                         min="1"
                                         required>
                                 </td>
-                                <td>Rp. {{ number_format($item->product->selling_price, 0, ',', '.') }}</td>
+                                <td>Rp. 
+                                    <input type="number" name="price" value="{{ $item->price }}" class="bg-slate-100 p-2 rounded-md">
+                                </td>
                                 <td align="center">
                                     <div class="flex gap-2 justify-center">
                                         <button type="submit"
