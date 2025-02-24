@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\UserQueueController;
 
 Route::get('/auth', function () {
     return view('frontviews.auth');
@@ -82,7 +83,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/queues/{id}', [QueueController::class, 'destroy'])->name('delete.queue');
 
     Route::post('/customers', [CustomerController::class, 'store'])->name('create.customer');
-    Route::post('/customers', [CustomerController::class, 'storeDashboard'])->name('create.dashboard.customer');
+    Route::post('/customers/dashboard', [CustomerController::class, 'storeDashboard'])->name('create.dashboard.customer');
     Route::put('/customers/{id}', [CustomerController::class, 'update'])->name('update.customer');
     Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('delete.customer');
 
@@ -110,5 +111,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/spending/{id}', [SpendingController::class, 'update'])->name('update.spending');
     Route::delete('/spending/{id}', [SpendingController::class, 'destroy'])->name('delete.spending');
 
+    Route::post('/user-queue', [UserQueueController::class, 'store'])->name('user-queue.store');
+    Route::put('/user-queue/{id}', [UserQueueController::class, 'update'])->name('user-queue.update');
+    Route::delete('/user-queue/{id}', [UserQueueController::class, 'destroy'])->name('user-queue.destroy');
+
     Route::get('/invoice/pdf/{id}', [InvoiceController::class, 'generatePDF'])->name('invoice.pdf');
+    Route::get('/ticket/pdf', [QueueController::class, 'generatePDF'])->name('ticket.pdf');
 });
