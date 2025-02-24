@@ -28,6 +28,7 @@
                     </div>
                     <input type="hidden" name="product_id" value="{{ $product->id }}">
                     <input type="hidden" name="amount" value="1">
+                    <input type="hidden" name="price" value="{{ $product->selling_price }}">
                 </div>
                 <button type="submit" data-id="{{ $product->id }}" id="addToCart{{ $product->id }}"
                     class="w-full p-2 bg-primary-green rounded-md text-white font-bold">
