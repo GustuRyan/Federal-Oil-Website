@@ -32,9 +32,9 @@
                 window.open("{{ session('invoice_url') }}", "_blank");
             </script>
         @endif
-        <div class="fixed bottom-0 right-0 font-bold z-30 p-4">
+        <div class="fixed w-full flex justify-center md:justify-end bottom-0 md:right-0 font-bold z-30 p-4">
             <a href="{{ route('admin.dashboard') }}"
-                class="py-2 px-4 bg-bold-blue rounded-full text-lg text-white text-center opacity-50 hover:opacity-100">
+                class="py-2 px-24 md:px-4 bg-bold-blue rounded-full text-2xl md:text-lg text-white text-center md:opacity-50 hover:opacity-100">
                 Panel
                 Admin
             </a>
@@ -46,13 +46,25 @@
 
                 {{-- Queue Card --}}
 
-                <div class="w-fit h-fit bg-light-red mr-24 rounded-lg shadow-lg p-8 grid grid-cols-2 gap-x-12 gap-y-16">
+                <div
+                    class="w-fit h-fit bg-light-red mr-24 rounded-lg shadow-lg p-8 md:grid grid-cols-2 gap-x-12 gap-y-16 hidden">
                     <div class="font-bold text-bold-blue">
                         <h1 class="text-2xl">
                             Antrean Sekarang
                         </h1>
-                        <p class="text-[192px] leading-none">
-                        </p>
+                        <div class="flex">
+                            <p class="text-[192px] leading-none">
+                            </p>
+                            <a href="{{ route('ticket.pdf') }}" class="rounded-full bg-primary-green w-10 h-10 flex items-center justify-center">
+                                <img src="/icons/icon_print.svg" alt="">
+                            </a>
+                        </div>
+                        <form action="{{ route('user-queue.store') }}" method="POST">
+                            @csrf
+                            <h2>Keluhan</h2>
+                            <textarea type="text" name="issue" class="p-2 rounded-md">{{ $issue ?? 'Keluhan pelanggan (opsional)' }}</textarea>
+                            <button type="submit">Submit</button>
+                        </form>
                     </div>
                     <div class="text-2xl font-bold text-bold-blue w-fit space-y-4">
                         <h1>
@@ -103,19 +115,40 @@
         {{-- Customer's Data --}}
 
         <div id="customer-data" x-data="{ open: false }"
-            class="w-full bg-light-red p-12 space-y-8 text-xl font-semibold">
+            class="w-full bg-light-red p-12 space-y-8 text-xl font-semibold hidden md:block">
             <!-- Header -->
             <div class="w-full flex justify-between items-center">
                 <h1 class="text-3xl font-bold text-bold-blue">
                     Data Pelanggan
                 </h1>
                 <div class="flex gap-4">
-                    <select id="customer-select" class="bg-white rounded-md p-3">
-                        <option value="">Pilih Pelanggan</option>
-                        @foreach ($customers as $customer)
-                            <option value="{{ $customer->id }}">{{ $customer->name }}</option>
-                        @endforeach
-                    </select>
+                    <form id="customer-form" action="{{ route('user-queue.store') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="customer_id" id="customer-id">
+
+                        <select id="customer-select" class="bg-white rounded-md p-3">
+                            <option value="">Pilih Pelanggan</option>
+                            @foreach ($customers as $customer)
+                                <option value="{{ $customer->id }}"
+                                    {{ $currentCustomer == $customer->id ? 'selected' : '' }}>
+                                    {{ $customer->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+
+                    <script>
+                        document.getElementById('customer-select').addEventListener('change', function() {
+                            let form = document.getElementById('customer-form');
+                            let input = document.getElementById('customer-id');
+                            input.value = this.value;
+
+                            if (input.value) {
+                                form.submit();
+                            }
+                        });
+                    </script>
+
                     <!-- Tombol untuk membuka form pelanggan baru -->
                     <button @click="open = !open"
                         class="bg-primary-green rounded-md text-xl text-white p-3 hover:opacity-85">
@@ -159,8 +192,8 @@
                 <div class="grid grid-cols-3 gap-x-12 mt-8">
                     <div class="space-y-2">
                         <label for="phone_number" class="font-bold text-slate-700">Nomor Telepon *</label>
-                        <input id="phone_number" name="phone_number" type="text" placeholder="Masukkan nomor telepon"
-                            class="w-full p-3 rounded-md border-2" required>
+                        <input id="phone_number" name="phone_number" type="text"
+                            placeholder="Masukkan nomor telepon" class="w-full p-3 rounded-md border-2" required>
                     </div>
                     <div class="space-y-2">
                         <label for="motorcycle_type" class="font-bold text-slate-700">Tipe Motor *</label>
@@ -192,18 +225,18 @@
             $total_product_price = 0;
 
             foreach ($products as $value) {
-                $total_cost = $total_cost + $value->product->selling_price * $value->amount;
+                $total_cost = $total_cost + $value->price * $value->amount;
                 $total_product_price = $total_cost;
             }
             foreach ($services as $value) {
-                $total_cost = $total_cost + $value->service->service_price;
-                $total_service_price = $total_service_price + $value->service->service_price;
+                $total_cost = $total_cost + $value->price;
+                $total_service_price = $total_service_price + $value->price;
             }
         @endphp
 
         {{-- Vehicle's Data --}}
 
-        <div class="p-12 flex flex-col lg:flex-row justify-between space-y-12 lg:space-y-0">
+        <div class="p-12 md:flex flex-col lg:flex-row justify-between space-y-12 lg:space-y-0  hidden">
 
             <div class="space-y-12 w-full">
                 <livewire:cashier-table :type="'service'" :items="$services" :sub_total="$total_service_price" />
@@ -213,6 +246,7 @@
 
             @include('frontviews.components.transaction-detail', [
                 'total_cost' => $total_cost,
+                'customer_id' => $currentCustomer,
             ])
         </div>
 
@@ -300,10 +334,7 @@
                 if (queueData.queue_list.includes(nextQueue)) {
                     nextQueueInput.value = nextQueue.toString().padStart(2, '0');
                     nextQueueInput.removeAttribute('readonly');
-                } else {
-                    nextQueueInput.value = queueData.queue_list[0].toString().padStart(2, '0');
-                    nextQueueInput.setAttribute('readonly', true);
-                }
+                } 
             }
         }
 
@@ -358,7 +389,7 @@
 
                 if (response.ok) {
                     alert('Antrean berhasil diperbarui');
-                    fetchQueueData(); // Memuat ulang data antrean setelah pembaruan
+                    fetchQueueData(); 
                 } else {
                     const errorData = await response.json();
                     console.error('Gagal memperbarui antrean:', errorData);
@@ -405,6 +436,7 @@
                 if (response.ok) {
                     alert('Antrean berhasil diperbarui');
                     fetchQueueData();
+                    location.reload();
                 } else {
                     const errorData = await response.json();
                     console.error('Gagal memperbarui antrean:', errorData);
@@ -415,7 +447,6 @@
                 alert('Error saat memperbarui antrean.');
             }
         }
-
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchQueueData();
