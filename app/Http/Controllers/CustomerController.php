@@ -28,7 +28,6 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
@@ -38,7 +37,6 @@ class CustomerController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Simpan data customer
         $customer = Customer::create($validated);
 
         return redirect()->route('admin.customer.index')->with('success', 'Pelanggan baru berhasil ditambahkan.');
@@ -46,7 +44,6 @@ class CustomerController extends Controller
     
     public function storeDashboard(Request $request)
     {
-        // Validasi data
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'address' => 'required|string',
@@ -56,7 +53,6 @@ class CustomerController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Simpan data customer
         $customer = Customer::create($validated);
 
         return redirect()->route('cashier')->with('success', 'Pelanggan baru berhasil ditambahkan.');
@@ -76,7 +72,6 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validasi data
         $validated = $request->validate([
             'name' => 'sometimes|required|string|max:255',
             'address' => 'sometimes|required|string',
@@ -86,7 +81,6 @@ class CustomerController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Temukan customer dan update
         $customer = Customer::findOrFail($id);
         $customer->update($validated);
 
