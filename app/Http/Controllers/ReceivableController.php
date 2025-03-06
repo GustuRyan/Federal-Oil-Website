@@ -40,8 +40,6 @@ class ReceivableController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        // Validasi data
         $validated = $request->validate([
             'customer_id' => 'required|exists:customers,id',
             'total_cost' => 'required|numeric',
@@ -50,7 +48,6 @@ class ReceivableController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Simpan data receivable
         $receivable = Receivable::create($validated);
 
         return redirect()->route('admin.receivables.index')->with('success', 'Piutang berhasil ditambahkan.');
@@ -78,7 +75,6 @@ class ReceivableController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validasi data
         $validated = $request->validate([
             'customer_id' => 'sometimes|required|exists:customers,id',
             'total_cost' => 'sometimes|required|numeric',
@@ -87,7 +83,6 @@ class ReceivableController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Temukan receivable dan update
         $receivable = Receivable::findOrFail($id);
         $receivable->update($validated);
 
