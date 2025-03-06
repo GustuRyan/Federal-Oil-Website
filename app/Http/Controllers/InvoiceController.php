@@ -65,7 +65,6 @@ class InvoiceController extends Controller
             ],
         ]);
 
-        // Generate chart data
         $chartData = $chart->build();
         $chartRevenue = $revenueChart->build();
         $spendData = $chart1->build();
@@ -124,9 +123,9 @@ class InvoiceController extends Controller
         ];
 
         $pdf = PDF::loadView('invoice', $data)
-            ->setOption('page-width', '80mm')  // Lebar kertas 80mm
-            ->setOption('page-height', '200mm') // Tinggi kertas 200mm
-            ->setOption('orientation', 'portrait'); // Portrait mode
+            ->setOption('page-width', '80mm')  
+            ->setOption('page-height', '200mm') 
+            ->setOption('orientation', 'portrait'); 
 
         return $pdf->download('invoice.pdf');
     }
