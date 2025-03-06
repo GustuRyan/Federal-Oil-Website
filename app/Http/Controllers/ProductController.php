@@ -26,7 +26,6 @@ class ProductController extends Controller
 
         $products = $query->paginate(10);
 
-        // Mengambil kategori unik dari produk
         $categories = Product::pluck('product_category')->unique();
 
         return view('backviews.pages.stock.index', compact('products', 'searchTerm', 'categories', 'categoryTerm'));
@@ -38,7 +37,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data
         $validated = $request->validate([
             'product_code' => 'required|integer|unique:products,product_code',
             'product_name' => 'required|string|max:255',
@@ -56,7 +54,6 @@ class ProductController extends Controller
             'shelf_location' => 'nullable|string',
         ]);
 
-        // Simpan data product
         $product = Product::create($validated);
 
         return redirect()->route('admin.stocks.index')->with('success', 'Produk berhasil ditambahkan.');
@@ -82,7 +79,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validasi data
         $validated = $request->validate([
             'product_code' => 'sometimes|required|integer|unique:products,product_code,' . $id,
             'product_name' => 'sometimes|required|string|max:255',
@@ -100,7 +96,6 @@ class ProductController extends Controller
             'shelf_location' => 'nullable|string',
         ]);
 
-        // Temukan produk dan update
         $product = Product::findOrFail($id);
         $product->update($validated);
 
