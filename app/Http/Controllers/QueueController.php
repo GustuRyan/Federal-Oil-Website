@@ -51,7 +51,6 @@ class QueueController extends Controller
             'last_queue' => 'nullable|integer',
         ]);
 
-        // Jika ID diberikan, lakukan update
         $queue = Queue::findOrFail($id);
 
         if (empty($validated['queue_list'])) {
@@ -70,7 +69,7 @@ class QueueController extends Controller
     public function updateCurrent(Request $request, $id)
     {
         $validated = $request->validate([
-            'current_queue' => 'required|integer', // Sesuaikan dengan frontend
+            'current_queue' => 'required|integer',
             'queue_list' => 'nullable|array',
         ]);
 
@@ -90,10 +89,8 @@ class QueueController extends Controller
 
     public function destroy($id)
     {
-        // Cari Queue berdasarkan ID
         $queue = Queue::findOrFail($id);
 
-        // Hapus data
         $queue->delete();
 
         return response()->json([
@@ -108,7 +105,7 @@ class QueueController extends Controller
 
         $data = ['current_queue' => $queue ? $queue->current_queue : 1];
 
-        $pdf = PDF::loadView('queue-ticket', compact('data')) // Mengirim sebagai compact array
+        $pdf = PDF::loadView('queue-ticket', compact('data'))
             ->setOption('page-width', '120mm')
             ->setOption('page-height', '120mm')
             ->setOption('orientation', 'portrait');
