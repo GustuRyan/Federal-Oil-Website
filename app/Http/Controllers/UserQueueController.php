@@ -65,5 +65,5 @@ class UserQueueController extends Controller
         $userQueue->delete();
 
         return redirect()->back()->with('success', 'Antrean berhasil dihapus.');
-    } //
+    } 
 }
