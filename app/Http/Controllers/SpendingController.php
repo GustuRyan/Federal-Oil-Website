@@ -86,7 +86,6 @@ class SpendingController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data
         $validated = $request->validate([
             'spending_type' => 'required|in:biaya operasional,biaya suku cadang,gaji',
             'distributor' => 'nullable|string',
@@ -95,7 +94,6 @@ class SpendingController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Simpan data spending
         $spending = Spending::create($validated);
 
         return redirect()->route('admin.spending.index')->with('success', 'Pengeluaran berhasil ditambahkan.');
@@ -125,7 +123,6 @@ class SpendingController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Temukan spending dan update
         $spending = Spending::findOrFail($id);
         $spending->update($validated);
 
