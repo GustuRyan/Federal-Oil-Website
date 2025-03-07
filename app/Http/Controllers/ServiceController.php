@@ -7,7 +7,6 @@ use App\Models\Service;
 
 class ServiceController extends Controller
 {
-    // Fetch all services
     public function index(Request $request)
     {
         $query = Service::query();
@@ -21,7 +20,6 @@ class ServiceController extends Controller
         return view('backviews.pages.service.index', compact('services', 'searchTerm'));
     }
 
-    // Create a new service
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -36,7 +34,6 @@ class ServiceController extends Controller
         return redirect()->route('admin.service.index')->with('success', 'Service berhasil ditambahkan.');
     }
 
-    // Show a specific service
     public function edit($id)
     {
         $service = Service::find($id);
@@ -48,7 +45,6 @@ class ServiceController extends Controller
         return view('backviews.pages.service.update', compact('service'));
     }
 
-    // Update an existing service
     public function update(Request $request, $id)
     {
         $service = Service::find($id);
@@ -69,7 +65,6 @@ class ServiceController extends Controller
         return redirect()->route('admin.service.index')->with('success', 'Service berhasil diperbarui.');
     }
 
-    // Delete a service
     public function destroy($id)
     {
         $service = Service::find($id);
