@@ -118,10 +118,8 @@ class TransactionController extends Controller
       ],
     ]);
 
-    // Pagination
     $transactions = $query->paginate(10);
 
-    // Generate chart data
     $chartData = $chart->build();
     $chartRevenue = $revenueChart->build();
 
@@ -163,8 +161,6 @@ class TransactionController extends Controller
 
   public function store(Request $request)
   {
-    // dd($request->all());
-
     $request->validate([
       'invoice' => 'required|string|max:255|unique:transactions,invoice',
       'customer_id' => 'required|integer',
@@ -265,7 +261,6 @@ class TransactionController extends Controller
     ]);
   }
 
-  // Update
   public function update(Request $request, $id)
   {
     $transaction = Transaction::findOrFail($id);
@@ -284,7 +279,6 @@ class TransactionController extends Controller
     return redirect()->route('admin.income.index')->with('success', 'Transaksi berhasil diperbarui.');
   }
 
-  // Delete
   public function destroy($id)
   {
     $transaction = Transaction::findOrFail($id);
