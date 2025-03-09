@@ -9,18 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    /**
-     * Nama tabel yang digunakan oleh model ini.
-     *
-     * @var string
-     */
     protected $table = 'products';
 
-    /**
-     * Atribut-atribut yang dapat diisi secara massal (mass assignable).
-     *
-     * @var array
-     */
     protected $fillable = [
         'product_code',
         'product_name',
@@ -38,11 +28,6 @@ class Product extends Model
         'shelf_location',
     ];
 
-    /**
-     * Atribut yang disembunyikan saat serialisasi.
-     *
-     * @var array
-     */
     protected $hidden = [
         'created_at',
         'updated_at',
