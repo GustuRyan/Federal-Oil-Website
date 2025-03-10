@@ -12,6 +12,21 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::table('products')->insert([
+            'product_code' => "",
+            'product_name' => "",
+            'product_category' => "",
+            'brand' => "",
+            'model' => "",
+            'first_stocks' => "",
+            'latest_stock' => "",
+            'buying_price' => "",
+            'selling_price' => "",
+            'unit_type' => "",
+            'in_date' => "",
+            'expired_date' => "",
+            'description' => "",
+            'shelf_location' => "",
+        ]);
     }
 }
