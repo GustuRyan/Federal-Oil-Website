@@ -12,6 +12,11 @@ class ServiceSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::table('services')->insert([
+            'service_code' => "",
+            'service_name' => "",
+            'service_price' => "",
+            'description' => "",
+        ]);
     }
 }
